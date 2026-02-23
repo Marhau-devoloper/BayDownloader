@@ -3,7 +3,8 @@ Download files fom Bay
 
 Dependencies
 requests
-pip install requests
+<p>pip install requests</p>
+
 aria2
 # Arch / Manjaro
 sudo pacman -S aria2
