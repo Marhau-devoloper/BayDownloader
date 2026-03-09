@@ -14,7 +14,7 @@ sudo apt install aria2
 
 
 # Build the Docker image (fresh build)
-sudo docker build --no-cache -t BayDownload .
+sudo docker build --no-cache -t baydownload .
 
 # Run the container interactively, mount Downloads, and open necessary ports Linux
 docker run -it \
@@ -22,7 +22,7 @@ docker run -it \
   -v ~/aria2-cache:/root/.cache/aria2 \
   -p 6894:6894/tcp \
   -p 6979:6979/udp \
-  BayDownload
+  baydownload
 
 # Run the container interactively, mount Downloads, and open necessary ports Windows 
 docker run -it `
@@ -30,4 +30,4 @@ docker run -it `
   -v "C:\Users\YourName\aria2-cache:/root/.cache/aria2" `
   -p 6894:6894/tcp `
   -p 6979:6979/udp `
-  BayDownload
+  baydownload
