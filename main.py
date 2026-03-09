@@ -56,7 +56,7 @@ def Download(Hash:str):
     sub.run([
     "aria2c",
     magnet,
-    "-d", "/home/marhau/Music/MusicBay/Downloads/",
+    f"-d", "{Download_Path}",
     "--seed-time=0",
     "--enable-dht=true",
     "--max-overall-download-limit=0",
