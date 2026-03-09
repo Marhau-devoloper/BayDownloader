@@ -3,36 +3,50 @@ import re
 import json
 import subprocess as sub
 import pathlib
-
+import os
 
 
 
 def get_data(FileName:str):
 
-
+    FileName = FileName.replace("-","+")
     URL = f"https://apibay.org/q.php?q={FileName}&cat=100"
     Response = rq.get(URL)
     Data = Response.text
     jsn = json.loads(Data)
     #,'Name','size'
     i = 0
-    d = 10
-    for i in range(10):
-
-        print(f"Num {i} ",jsn[i]['id'],jsn[i]['name'],str(round(int(jsn[i]['size'])/1000000)) + "mb")
-        i += 1
-    print("Pls Choose with songs to download by Num from 0 to 9")
-    User_choice = int(input("Num: "))
+    os.system("clear")
+    print( "======================================================") 
+    for i in range(30):
+        try:
+            print(f"| Num {i} ",jsn[i]['id'],jsn[i]['name'],str(round(int(jsn[i]['size'])/1000000)) + "mb")
+            
+            i += 1
+        except:
+            if jsn[0]['name'] == "No results returned" :
+                
+                exit()
+    print( " ======================================================")           
+    print(f"|Pls Choose with songs to download by Num like 0 . . . |")
+    print( " ======================================================") 
+    User_choice = int(input("Num ==> "))
+    if User_choice > 29 : User_choice = 29
     return jsn[User_choice]['info_hash']
 
 
 
 
 def Download(Hash:str):
-    import os 
     Download_Path = str(pathlib.Path().resolve()) + "/Downloads/"
     if os.path.isdir(Download_Path) == False:
         os.makedirs(Download_Path)
+    os.system("clear")
+    print(f'''
+          
+          | Downloading begins and gonna stored in|
+          | {Download_Path} |
+          ''')
     magnet = (
     f"magnet:?xt=urn:btih:{Hash}"
     "&tr=udp://tracker.opentrackr.org:1337/announce"
@@ -49,12 +63,44 @@ def Download(Hash:str):
     "--bt-max-peers=100"
 ])
 "https://apibay.org/q.php?q={Song_Name}&cat=100"
+
+
+
+
+
+
+
+
+os.system("clear")
+print("""
+ /$$$$$$$                      /$$$$$$$                                    /$$                           /$$                    
+| $$__  $$                    | $$__  $$                                  | $$                          | $$                    
+| $$  \ $$  /$$$$$$  /$$   /$$| $$  \ $$  /$$$$$$  /$$  /$$  /$$ /$$$$$$$ | $$  /$$$$$$   /$$$$$$   /$$$$$$$  /$$$$$$   /$$$$$$ 
+| $$$$$$$  |____  $$| $$  | $$| $$  | $$ /$$__  $$| $$ | $$ | $$| $$__  $$| $$ /$$__  $$ |____  $$ /$$__  $$ /$$__  $$ /$$__  $$
+| $$__  $$  /$$$$$$$| $$  | $$| $$  | $$| $$  \ $$| $$ | $$ | $$| $$  \ $$| $$| $$  \ $$  /$$$$$$$| $$  | $$| $$$$$$$$| $$  \__/
+| $$  \ $$ /$$__  $$| $$  | $$| $$  | $$| $$  | $$| $$ | $$ | $$| $$  | $$| $$| $$  | $$ /$$__  $$| $$  | $$| $$_____/| $$      
+| $$$$$$$/|  $$$$$$$|  $$$$$$$| $$$$$$$/|  $$$$$$/|  $$$$$/$$$$/| $$  | $$| $$|  $$$$$$/|  $$$$$$$|  $$$$$$$|  $$$$$$$| $$      
+|_______/  \_______/ \____  $$|_______/  \______/  \_____/\___/ |__/  |__/|__/ \______/  \_______/ \_______/ \_______/|__/      
+                     /$$  | $$                                                                                                  
+                    |  $$$$$$/                                                                                                  
+                     \______/                                                                                                   """)
+
+
 print("""
 This software is a generic BitTorrent utility.
 It is intended for downloading and sharing legal, freely distributable content only.
 The author does not host, distribute, or promote copyrighted material.
 Users are responsible for complying with their local laws.
+      
+Use this app only on education pruposes
 """)
-print("Enter File Name")
-Download(get_data("Nirvana"))
+
+
+print("""
+     <=================>
+      |Enter File Name|
+     <=================>  
+      """)
+user_query = input("Name ==>  ")
+Download(get_data(user_query))
 
